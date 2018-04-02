@@ -1,0 +1,23 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+<body>
+
+<p>Bonjour,</p>
+
+<p>
+    Ci-dessous le suivi technique du {{ date }}
+</p>
+
+{% for app, status in apps %}
+
+    <p>
+        <b><u>{{ app }} :</u></b>
+    </p>
+    <p>Page consultation => {{ status }}</p>
+{% endfor %}
+
+
+</body>
+</html>
