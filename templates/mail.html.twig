@@ -10,12 +10,11 @@
     Ci-dessous le suivi technique du {{ date }}
 </p>
 
-{% for app, status in apps %}
-
+{% for app in apps %}
     <p>
-        <b><u>{{ app }} :</u></b>
+        <b><u>{{ app.appName }} :</u></b>
     </p>
-    <p>Page consultation => {{ status }}</p>
+    <p>Page consultation => {% if app.status == true %} OK {% else %} KO {% endif %}</p>
 {% endfor %}
 
 

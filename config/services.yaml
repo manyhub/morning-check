@@ -16,7 +16,12 @@ services:
     App\:
         resource: '../src/*'
         exclude: '../src/{Entity,Migrations,Tests,Kernel.php}'
-
+    App\Notifier\MailNotifier:
+        arguments:
+          - '@swiftmailer.mailer'
+          - '@twig'
+          - '%env(MAIL_FROM)%'
+          - ['%env(MAIL_TO)%']
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
