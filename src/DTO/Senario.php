@@ -25,6 +25,12 @@ class Senario
     private $needle;
 
     /**
+     * @var string
+     * @type("string")
+     */
+    private $title;
+
+    /**
      * @return string
      */
     public function getUri(): string
@@ -46,5 +52,13 @@ class Senario
     public function getNeedle(): string
     {
         return $this->needle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
     }
 }
