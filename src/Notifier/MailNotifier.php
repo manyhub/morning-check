@@ -4,14 +4,19 @@ namespace App\Notifier;
 
 class MailNotifier implements NotifierInterface
 {
+    /** @var \Swift_Mailer  */
     private $mailer;
 
+    /** @var \Twig_Environment  */
     private $environment;
 
+    /** @var string  */
     private $from;
 
+    /** @var array  */
     private $to;
 
+    /** @var array  */
     private $cc;
 
 
@@ -23,24 +28,26 @@ class MailNotifier implements NotifierInterface
      * @param string[] $to
      * @param string[] $cc
      */
-    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $environment, string $from, array $to = [], array $cc = [])
+    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $environment, string $from, string $to, string $cc)
     {
         $this->mailer = $mailer;
         $this->environment = $environment;
         $this->mailer = $mailer;
         $this->from = $from;
-        $this->to = $to;
-        $this->cc = $cc;
+        $this->to = explode(';', $to);
+        $this->cc = explode(';', $cc);
+
     }
 
 
     public function send(array $results)
     {
         $body = $this->environment->render('mail.html.twig', ['date' => \date('d/m/Y'), 'apps' => $results]);
+
         $message = (new \Swift_Message(sprintf('[%s] Suivi Manymore du %s', \getenv('APP_ENV'), \date('d/m/Y'))))
             ->setFrom($this->from)
-            ->setTo($this->to)
             ->setCc($this->cc)
+            ->setTo($this->to)
             ->setBody(\strip_tags($body))
             ->addPart($body, 'text/html');
 
