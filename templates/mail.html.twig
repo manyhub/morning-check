@@ -14,7 +14,7 @@
     <p>
         <b><u>{{ app.appName }} :</u></b>
     </p>
-    <p>Page consultation => {% if app.status == true %} OK {% else %} KO {% endif %}</p>
+    <p>{{ app.title }} => {% if app.status == true %} OK {% else %} KO {% endif %}</p>
 {% endfor %}
 
 

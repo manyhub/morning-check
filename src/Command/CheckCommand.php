@@ -69,7 +69,7 @@ class CheckCommand extends Command
 
             $end = new \DateTime();
 
-            $result = ResultFactory::create($appName, $find, $start->diff($end));
+            $result = ResultFactory::create($appName, $find, $start->diff($end), $scenario->getTitle());
 
             $results[] = $result;
 
