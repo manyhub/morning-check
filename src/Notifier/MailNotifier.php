@@ -37,7 +37,7 @@ class MailNotifier implements NotifierInterface
     public function send(array $results)
     {
         $body = $this->environment->render('mail.html.twig', ['date' => \date('d/m/Y'), 'apps' => $results]);
-        $message = (new \Swift_Message(sprintf('[%s] Suivi Manymore du %s', \getenv('APP_ENV'), \date('d/m/Y'))))
+        $message = (new \Swift_Message(sprintf('[%s] Suivi Manymore du %s - Disponibilité des applications', \getenv('APP_ENV'), \date('d/m/Y'))))
             ->setFrom($this->from)
             ->setTo($this->to)
             ->setCc($this->cc)
