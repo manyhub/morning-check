@@ -15,18 +15,23 @@ class Result
     /** @var string  */
     private $title;
 
+    /** @var string */
+    private $screen;
+
 
     public function __construct(
         string $appName,
         bool $status,
         \DateInterval $duration,
-        string $title
+        string $title,
+        string $screen
     )
     {
         $this->appName = $appName;
         $this->status = $status;
         $this->duration = $duration;
         $this->title = $title;
+        $this->screen = $screen;
     }
 
     /**
@@ -59,5 +64,13 @@ class Result
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getScreen():string
+    {
+        return $this->screen;
     }
 }

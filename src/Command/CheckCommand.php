@@ -7,12 +7,12 @@ namespace App\Command;
 use App\DTO\Senario;
 use App\Factory\ResultFactory;
 use App\Notifier\NotifierInterface;
-use Goutte\Client;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Panther\Client;
 
 
 class CheckCommand extends Command
@@ -54,14 +54,13 @@ class CheckCommand extends Command
         /** @var  Senario $scenario */
         foreach ($senarios as $appName => $scenario) {
             $start = new \DateTime();
-            $client = new Client();
+            $client = Client::createChromeClient();
             $output->writeln("Started $appName");
             $crawler = $client->request('GET', $scenario->getUri());
             $output->writeln($crawler->getUri());
             $form = $crawler->selectButton('commit')->form();
             $crawler = $client->submit($form, $scenario->getFormData());
             $output->writeln($crawler->getUri());
-            $output->writeln(\sprintf("Code %s app %s", $client->getResponse()->getStatus(), $appName));
 
             $find = false !== \strpos($crawler->text(), $scenario->getNeedle());
 
@@ -69,7 +68,7 @@ class CheckCommand extends Command
 
             $end = new \DateTime();
 
-            $result = ResultFactory::create($appName, $find, $start->diff($end), $scenario->getTitle());
+            $result = ResultFactory::create($appName, $find, $start->diff($end), $scenario->getTitle(), $client->takeScreenshot());
 
             $results[] = $result;
 
